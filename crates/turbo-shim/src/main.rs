@@ -17,14 +17,16 @@ mod repo_state;
 static TURBO_JSON: &str = "turbo.json";
 
 #[derive(Debug)]
-struct Args {
+struct ShimArgs {
     cwd: PathBuf,
+    skip_infer: bool,
     remaining_args: Vec<String>,
 }
-impl Args {
+impl ShimArgs {
     pub fn parse() -> Result<Self> {
         let mut found_cwd_flag = false;
         let mut cwd: Option<PathBuf> = None;
+        let mut skip_infer = false;
         let mut remaining_args = Vec::new();
         let mut is_forwarded_args = false;
         let args = env::args().skip(1);
@@ -32,6 +34,8 @@ impl Args {
             // We've seen a `--` and therefore we do no parsing
             if is_forwarded_args {
                 remaining_args.push(arg);
+            } else if arg == "--skip-infer" {
+                skip_infer = true;
             } else if arg == "--" {
                 // If we've hit `--` we've reached the args forwarded to tasks.
                 remaining_args.push(arg);
@@ -77,6 +81,13 @@ impl Args {
     ///
     /// returns: Result<i32, Error>
     fn run_correct_turbo(mut self) -> Result<i32> {
+        // If the `--skip-infer` flag is passed, we immediately run the current turbo
+        // this usually means we've done the inference already and this execution is
+        // the local turbo with the correct arguments.
+        if self.skip_infer {
+            return turborepo::run();
+        }
+
         let repo_state = RepoState::infer(&self.cwd)?;
 
         if let Some(local_turbo_version) = repo_state.infer_local_turbo_version()? {
@@ -149,7 +160,7 @@ impl Args {
     }
 }
 fn main() -> Result<()> {
-    let args = Args::parse()?;
+    let args = ShimArgs::parse()?;
     let exit_code = args.run_correct_turbo()?;
     process::exit(exit_code);
 }
