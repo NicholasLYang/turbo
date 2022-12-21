@@ -42,9 +42,9 @@ jobs:
         if: ${{ matrix.settings.container-setup }}
         run: ${{ matrix.settings.container-setup }}
 
-      - name: Install target
-        shell: bash
-        run: rustup target add ${{ matrix.settings.target }}
+      #      - name: Install target
+      #        shell: bash
+      #        run: rustup target add ${{ matrix.settings.target }}
 
       - name: Install
         uses: actions-rs/toolchain@v1
