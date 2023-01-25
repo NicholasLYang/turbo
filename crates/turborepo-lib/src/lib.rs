@@ -27,6 +27,7 @@ pub fn get_version() -> &'static str {
 }
 
 pub fn main() -> Payload {
+    println!("RUNNING");
     match shim::run() {
         Ok(payload) => payload,
         Err(err) => {
