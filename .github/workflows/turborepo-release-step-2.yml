@@ -76,8 +76,9 @@ jobs:
       - uses: ./.github/actions/setup-go
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+
       - name: Install jq
-        uses: mbround18/install-jq@v1
+        run: apt-get install jq
 
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
