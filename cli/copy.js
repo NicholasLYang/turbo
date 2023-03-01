@@ -1,3 +1,4 @@
 const { cpSync } = require("fs");
-const [dest, ...files] = process.argv.slice(2).reverse();
-files.forEach((src) => cpSync(src, dest));
+const args = process.argv.slice(2).reverse();
+const dest = args.pop();
+args.forEach((src) => cpSync(src, dest));
