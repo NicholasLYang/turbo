@@ -78,7 +78,7 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Install jq
-        run: apt-get update && apt-get install jq
+        run: apt-get update && apt-get install -y jq
 
       - name: Setup Rust
         uses: ./.github/actions/setup-rust
