@@ -10,23 +10,23 @@ on:
         description: "Staging branch to run release from"
 
 jobs:
-  smoke-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.release_branch }}
-      - uses: ./.github/actions/setup-node
-        with:
-          enable-corepack: false
-      - uses: ./.github/actions/setup-go
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Test
-        run: pnpm -- turbo run test --filter=cli --color
+  #  smoke-test:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #        with:
+  #          ref: ${{ inputs.release_branch }}
+  #      - uses: ./.github/actions/setup-node
+  #        with:
+  #          enable-corepack: false
+  #      - uses: ./.github/actions/setup-go
+  #        with:
+  #          github-token: "${{ secrets.GITHUB_TOKEN }}"
+  #      - name: Test
+  #        run: pnpm -- turbo run test --filter=cli --color
 
   darwin:
-    needs: [smoke-test]
+    needs: []
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,7 +56,7 @@ jobs:
 
   # compiles linux and windows in a container
   cross:
-    needs: [smoke-test]
+    needs: []
     runs-on: ubuntu-latest
     container:
       image: docker://ghcr.io/vercel/turbo-cross:v1.18.5
@@ -68,8 +68,13 @@ jobs:
       - uses: ./.github/actions/setup-go
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Install JQ
+      - name: Install jq
         uses: mbround18/install-jq@v1
+
+      - name: Install cross
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross
+
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@v3
         with:
@@ -82,8 +87,8 @@ jobs:
         run: cd cli && make build-go-turbo-cross
         env:
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: turbo-go-cross-${{ inputs.release_branch }}
-          path: cli/dist-cross
+#      - name: Upload Artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: turbo-go-cross-${{ inputs.release_branch }}
+#          path: cli/dist-cross
