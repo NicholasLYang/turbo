@@ -143,7 +143,7 @@ func (cache *httpCache) storeFile(tw *tar.Writer, repoRelativePath turbopath.Anc
 	return err
 }
 
-func (cache *httpCache) Fetch(anchor turbopath.AbsoluteSystemPath, key string, _unusedOutputGlobs []string) (ItemStatus, []turbopath.AnchoredSystemPath, int, error) {
+func (cache *httpCache) Fetch(_ turbopath.AbsoluteSystemPath, key string, _ []string) (ItemStatus, []turbopath.AnchoredSystemPath, int, error) {
 	cache.requestLimiter.acquire()
 	defer cache.requestLimiter.release()
 	hit, files, duration, err := cache.retrieve(key)
@@ -349,7 +349,7 @@ func restoreSymlink(root turbopath.AbsoluteSystemPath, hdr *tar.Header, allowNon
 	return nil
 }
 
-func (cache *httpCache) Clean(anchor turbopath.AbsoluteSystemPath) {
+func (cache *httpCache) Clean(_ turbopath.AbsoluteSystemPath) {
 	// Not possible; this implementation can only clean for a hash.
 }
 
