@@ -8,10 +8,10 @@ func newNoopCache() *noopCache {
 	return &noopCache{}
 }
 
-func (c *noopCache) Put(_ turbopath.AbsoluteSystemPath, _ string, duration int, files []turbopath.AnchoredSystemPath) error {
+func (c *noopCache) Put(_ turbopath.AbsoluteSystemPath, _ string, _ int, _ []turbopath.AnchoredSystemPath) error {
 	return nil
 }
-func (c *noopCache) Fetch(_ turbopath.AbsoluteSystemPath, _ string, files []string) (ItemStatus, []turbopath.AnchoredSystemPath, int, error) {
+func (c *noopCache) Fetch(_ turbopath.AbsoluteSystemPath, _ string, _ []string) (ItemStatus, []turbopath.AnchoredSystemPath, int, error) {
 	return ItemStatus{Local: false, Remote: false}, nil, 0, nil
 }
 func (c *noopCache) Exists(_ string) ItemStatus {
