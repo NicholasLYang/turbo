@@ -129,7 +129,7 @@ func (f *fsCache) Put(anchor turbopath.AbsoluteSystemPath, hash string, duration
 	return cacheItem.Close()
 }
 
-func (f *fsCache) Clean(anchor turbopath.AbsoluteSystemPath) {
+func (f *fsCache) Clean(_ turbopath.AbsoluteSystemPath) {
 	fmt.Println("Not implemented yet")
 }
 
