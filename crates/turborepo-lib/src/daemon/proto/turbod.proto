@@ -124,7 +124,7 @@ message DiscoverPackagesResponse {
 
 message PackageFiles {
   string package_json = 1;
-  string turbo_json = 2;
+  optional string turbo_json = 2;
 }
 
 enum PackageManager {
