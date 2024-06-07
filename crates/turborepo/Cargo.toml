@@ -1,6 +1,6 @@
 [package]
 name = "turbo"
-version = "2.0.2-canary.1"
+version = "2.0.4-canary.2"
 edition = "2021"
 license = "MIT"
 
