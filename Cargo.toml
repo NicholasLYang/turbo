@@ -104,14 +104,23 @@ unix-archive = ".tar.gz"
 pr-run-mode = "plan"
 
 [workspace.metadata.dist.dependencies.homebrew]
-protobuf = { version = "*", targets = ["aarch64-apple-darwin", "x86_64-apple-darwin"] }
+protobuf = "*"
+capnp = "*"
 
 [workspace.metadata.dist.dependencies.chocolatey]
-protoc = { version = "*", targets = ["x86_64-pc-windows-msvc"] }
+protoc = "27.1.0"
+capnproto = "*"
 
 [workspace.metadata.dist.dependencies.apt]
-protobuf-compiler = { version = "*", targets = ["aarch64-unknown-linux-musl"] }
-aarch64-linux-musl-gcc = { version = "*", targets = ["aarch64-unknown-linux-musl"] }
+build-essential = "*"
+musl-tools = "*"
+musl-dev = "*"
+clang = "*"
+llvm = "*"
+capnproto = "*"
+gcc-aarch64-linux-gnu = { version = "*", targets = ["aarch64-unknown-linux-musl"] }
+binutils-aarch64-linux-gnu = { version = "*", targets = ["aarch64-unknown-linux-musl"] }
+protobuf-compiler = "*"
 
 [workspace.lints.clippy]
 too_many_arguments = "allow"
@@ -232,7 +241,7 @@ wax = { path = "crates/turborepo-wax" }
 turborepo-vercel-api = { path = "crates/turborepo-vercel-api" }
 turborepo-vercel-api-mock = { path = "crates/turborepo-vercel-api-mock" }
 turborepo-vt100 = { path = "crates/turborepo-vt100" }
-update-informer = { path = "crates/update-informer" }
+update-informer = { path = "crates/update-informer", default-features = false, features = ["reqwest"] }
 
 # Be careful when selecting tls backend, including change default tls backend.
 # If you changed, must verify with ALL build targets with next-swc to ensure

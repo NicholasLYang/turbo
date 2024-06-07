@@ -1500,6 +1500,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "acbf1af155f9b9ef647e42cdc158db4b64a1b61f743629225fde6f3e0be2a7c7"
 
 [[package]]
+name = "colored"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cbf2150cce219b664a8a70df7a1f933836724b503f8a413af9365b4dcc4d90b8"
+dependencies = [
+ "lazy_static",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
 name = "combine"
 version = "4.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3519,7 +3529,7 @@ dependencies = [
  "httpdate",
  "itoa",
  "pin-project-lite",
- "socket2 0.4.9",
+ "socket2 0.5.4",
  "tokio",
  "tower-service",
  "tracing",
@@ -3944,6 +3954,8 @@ dependencies = [
  "mime",
  "once_cell",
  "polling",
+ "serde",
+ "serde_json",
  "slab",
  "sluice",
  "tracing",
@@ -4761,6 +4773,26 @@ dependencies = [
  "log",
  "wasi",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "mockito"
+version = "0.32.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "406f43768da5a859ce19bb0978fd8dc2167a7d9a52f3935c6a187242e1a4ff9f"
+dependencies = [
+ "assert-json-diff",
+ "colored",
+ "futures",
+ "hyper 0.14.28",
+ "lazy_static",
+ "log",
+ "rand 0.8.5",
+ "regex",
+ "serde_json",
+ "serde_urlencoded",
+ "similar",
+ "tokio",
 ]
 
 [[package]]
@@ -10105,7 +10137,7 @@ dependencies = [
 
 [[package]]
 name = "turbo"
-version = "2.0.4-canary.2"
+version = "2.0.4-canary.3"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -11722,7 +11754,11 @@ checksum = "8ecb6da28b8a351d773b68d5825ac39017e680750f980f3a1a85cd8dd28a47c1"
 name = "update-informer"
 version = "1.1.0"
 dependencies = [
+ "colored",
  "directories",
+ "isahc",
+ "mockito",
+ "once_cell",
  "reqwest",
  "semver 1.0.23",
  "serde",
